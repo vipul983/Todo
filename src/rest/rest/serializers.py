@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from .models import TodoItem
-class TodoItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TodoItem
-        fields = ('id', 'text', 'done')
+import json
+
+
+
+class TodoListSerializer(serializers.Serializer):
+    text = serializers.CharField(max_length=200)
+    done = serializers.BooleanField(default=False)
+
+    def create(self, validated_data):
+        return TodoItem(**validated_data)
